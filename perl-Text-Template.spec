@@ -4,16 +4,14 @@
 #
 Name     : perl-Text-Template
 Version  : 1.53
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.53.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.53.tar.gz
 Summary  : 'Expand template text with embedded Perl'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
-Requires: perl-Text-Template-license
-Requires: perl-Text-Template-man
-Requires: perl(Test::More::UTF8)
-Requires: perl(Test::Warnings)
+Requires: perl-Text-Template-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 BuildRequires : perl(Test::More::UTF8)
 BuildRequires : perl(Test::Warnings)
 
@@ -25,20 +23,21 @@ has little Perl programs embedded in it here and there.  When you
 `fill in' a template, you evaluate the little programs and replace
 them with their values.
 
+%package dev
+Summary: dev components for the perl-Text-Template package.
+Group: Development
+Provides: perl-Text-Template-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-Text-Template package.
+
+
 %package license
 Summary: license components for the perl-Text-Template package.
 Group: Default
 
 %description license
 license components for the perl-Text-Template package.
-
-
-%package man
-Summary: man components for the perl-Text-Template package.
-Group: Default
-
-%description man
-man components for the perl-Text-Template package.
 
 
 %prep
@@ -66,12 +65,12 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-Text-Template
-cp LICENSE %{buildroot}/usr/share/doc/perl-Text-Template/LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-Text-Template
+cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Text-Template/LICENSE
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -80,14 +79,14 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/Text/Template.pm
-/usr/lib/perl5/site_perl/5.26.1/Text/Template/Preprocess.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Text/Template.pm
+/usr/lib/perl5/vendor_perl/5.26.1/Text/Template/Preprocess.pm
 
-%files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-Text-Template/LICENSE
-
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/Text::Template.3
 /usr/share/man/man3/Text::Template::Preprocess.3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-Text-Template/LICENSE
