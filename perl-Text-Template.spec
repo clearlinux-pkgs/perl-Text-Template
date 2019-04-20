@@ -4,7 +4,7 @@
 #
 Name     : perl-Text-Template
 Version  : 1.55
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.55.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.55.tar.gz
 Summary  : Expand template text with embedded perl
