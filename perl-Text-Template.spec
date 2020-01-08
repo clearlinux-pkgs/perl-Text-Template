@@ -4,14 +4,16 @@
 #
 Name     : perl-Text-Template
 Version  : 1.58
-Release  : 15
+Release  : 16
 URL      : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.58.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.58.tar.gz
-Summary  : Expand template text with embedded perl
+Summary  : 'Expand template text with embedded Perl'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-Text-Template-license = %{version}-%{release}
+Requires: perl-Text-Template-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
+BuildRequires : perl(Test::More::UTF8)
 BuildRequires : perl(Test::Warnings)
 
 %description
@@ -27,7 +29,6 @@ Summary: dev components for the perl-Text-Template package.
 Group: Development
 Provides: perl-Text-Template-devel = %{version}-%{release}
 Requires: perl-Text-Template = %{version}-%{release}
-Requires: perl-Text-Template = %{version}-%{release}
 
 %description dev
 dev components for the perl-Text-Template package.
@@ -41,8 +42,18 @@ Group: Default
 license components for the perl-Text-Template package.
 
 
+%package perl
+Summary: perl components for the perl-Text-Template package.
+Group: Default
+Requires: perl-Text-Template = %{version}-%{release}
+
+%description perl
+perl components for the perl-Text-Template package.
+
+
 %prep
 %setup -q -n Text-Template-1.58
+cd %{_builddir}/Text-Template-1.58
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -67,7 +78,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Text-Template
-cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Text-Template/LICENSE
+cp %{_builddir}/Text-Template-1.58/LICENSE %{buildroot}/usr/share/package-licenses/perl-Text-Template/f12894289cb0f379f24b8d63e2e761dbcba1b216
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -80,8 +91,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Text/Template.pm
-/usr/lib/perl5/vendor_perl/5.28.2/Text/Template/Preprocess.pm
 
 %files dev
 %defattr(-,root,root,-)
@@ -90,4 +99,9 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Text-Template/LICENSE
+/usr/share/package-licenses/perl-Text-Template/f12894289cb0f379f24b8d63e2e761dbcba1b216
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Text/Template.pm
+/usr/lib/perl5/vendor_perl/5.30.1/Text/Template/Preprocess.pm
