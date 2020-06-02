@@ -4,7 +4,7 @@
 #
 Name     : perl-Text-Template
 Version  : 1.58
-Release  : 17
+Release  : 18
 URL      : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.58.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/MS/MSCHOUT/Text-Template-1.58.tar.gz
 Summary  : 'Expand template text with embedded Perl'
@@ -103,5 +103,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/Text/Template.pm
-/usr/lib/perl5/vendor_perl/5.30.2/Text/Template/Preprocess.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Text/Template.pm
+/usr/lib/perl5/vendor_perl/5.30.3/Text/Template/Preprocess.pm
